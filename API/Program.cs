@@ -1,4 +1,5 @@
 using API.Middleware;
+using Application;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
-builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection")!);
+builder.Services
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection")!);
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
