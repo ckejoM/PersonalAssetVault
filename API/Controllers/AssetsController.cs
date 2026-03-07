@@ -1,26 +1,27 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 public sealed class AssetsController : ApiController // Inherits from our custom base class
 {
     private readonly IAssetService _assetService;
 
-    // TODO (Phase 4): We will extract this dynamically from the JWT User Claims.
-    private readonly Guid _mockUserId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-
     public AssetsController(IAssetService assetService)
     {
         _assetService = assetService;
     }
+    private Guid UserId => Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
     [HttpGet]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
-        var result = await _assetService.GetByUserIdAsync(_mockUserId, cancellationToken);
+        var result = await _assetService.GetByUserIdAsync(UserId, cancellationToken);
 
         return result.IsSuccess ? Ok(result.Value) : HandleFailure(result);
     }
@@ -36,7 +37,7 @@ public sealed class AssetsController : ApiController // Inherits from our custom
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateAssetRequest request, CancellationToken cancellationToken)
     {
-        var result = await _assetService.CreateAsync(_mockUserId, request, cancellationToken);
+        var result = await _assetService.CreateAsync(UserId, request, cancellationToken);
 
         // A Senior standard: Return 201 Created with a Location header pointing to the new resource
         return result.IsSuccess
@@ -47,7 +48,7 @@ public sealed class AssetsController : ApiController // Inherits from our custom
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateAssetRequest request, CancellationToken cancellationToken)
     {
-        var result = await _assetService.UpdateAsync(id, _mockUserId, request, cancellationToken);
+        var result = await _assetService.UpdateAsync(id, UserId, request, cancellationToken);
 
         return result.IsSuccess ? NoContent() : HandleFailure(result);
     }
@@ -55,7 +56,7 @@ public sealed class AssetsController : ApiController // Inherits from our custom
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _assetService.DeleteAsync(id, _mockUserId, cancellationToken);
+        var result = await _assetService.DeleteAsync(id, UserId, cancellationToken);
 
         return result.IsSuccess ? NoContent() : HandleFailure(result);
     }
