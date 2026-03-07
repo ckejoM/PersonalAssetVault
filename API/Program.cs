@@ -10,7 +10,9 @@ builder.Services.AddControllers();
 
 builder.Services
     .AddApplication()
-    .AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection")!);
+    .AddInfrastructure(
+        builder.Configuration.GetConnectionString("DefaultConnection")!,
+        builder.Configuration);
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -26,7 +28,10 @@ if (app.Environment.IsDevelopment())
 app.UseStatusCodePages();
 app.UseExceptionHandler();
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
