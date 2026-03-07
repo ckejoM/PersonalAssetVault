@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Senior Tip: Set a clean default background and text color for the whole app here */
+body {
+  @apply bg-gray-50 text-gray-900 antialiased;
+}
