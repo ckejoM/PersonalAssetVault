@@ -12,6 +12,7 @@ public static class DependencyInjection
 
         // Register the Application Services
         services.AddScoped<IAssetService, AssetService>();
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }
