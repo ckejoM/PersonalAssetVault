@@ -19,6 +19,10 @@ export const routes: Routes = [
         path: 'dashboard', 
         loadComponent: () => import('./features/dashboard/dashboard/dashboard.component').then(c => c.DashboardComponent) 
       },
+      {
+        path: 'assets/create',
+        loadComponent: () => import('./features/assets/asset-create/asset-create.component').then(c => c.AssetCreateComponent)
+      },
       { 
         path: 'assets', 
         loadComponent: () => import('./features/assets/asset-list/asset-list.component').then(c => c.AssetListComponent) 

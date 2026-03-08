@@ -1,11 +1,12 @@
 import { Component, inject, computed, OnInit } from '@angular/core';
 import { AssetService } from '../../../core/services/asset.service';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CurrencyPipe, DatePipe], // We use Angular's built-in pipes to format the data
+  imports: [CurrencyPipe, DatePipe, RouterLink], // We use Angular's built-in pipes to format the data
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {

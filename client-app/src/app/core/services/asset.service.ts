@@ -10,6 +10,12 @@ export interface AssetResponse {
   categoryId: string;
   acquiredAt: string;
 }
+export interface CreateAssetRequest {
+  name: string;
+  value: number;
+  categoryId: string;
+  acquiredAt: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +36,10 @@ export class AssetService {
       next: (data) => this.assetsState.set(data),
       error: (err) => console.error('Failed to load assets', err)
     });
+  }
+  public create(request: CreateAssetRequest) {
+    // We return the Observable here so the component can subscribe, 
+    // handle loading states, and redirect the user upon success.
+    return this.http.post<AssetResponse>(this.apiUrl, request);
   }
 }
