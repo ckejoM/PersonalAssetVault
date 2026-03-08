@@ -60,4 +60,4 @@ Open a new terminal window, navigate to the client folder, install packages, and
 * **`client-app/`**: Angular SPA featuring layout shells, reactive forms, and global HTTP interceptors.
 
 ---
-*Created by Jovan Madzic | Software Engineer* - [LinkedIn](https://www.linkedin.com/in/jovan-madzic)
+*Created by Jovan Madzic | Software Engineer* - [LinkedIn](https://www.linkedin.com/in/jovan-madzic-12093b202/)
