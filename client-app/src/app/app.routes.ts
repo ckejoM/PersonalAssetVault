@@ -23,6 +23,10 @@ export const routes: Routes = [
         path: 'assets/create',
         loadComponent: () => import('./features/assets/asset-create/asset-create.component').then(c => c.AssetCreateComponent)
       },
+      {
+        path: 'assets/edit/:id',
+        loadComponent: () => import('./features/assets/asset-edit/asset-edit.component').then(c => c.AssetEditComponent)
+      },
       { 
         path: 'assets', 
         loadComponent: () => import('./features/assets/asset-list/asset-list.component').then(c => c.AssetListComponent) 

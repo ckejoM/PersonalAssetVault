@@ -16,6 +16,9 @@ export interface CreateAssetRequest {
   categoryId: string;
   acquiredAt: string;
 }
+export interface UpdateAssetRequest {
+  value: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +44,16 @@ export class AssetService {
     // We return the Observable here so the component can subscribe, 
     // handle loading states, and redirect the user upon success.
     return this.http.post<AssetResponse>(this.apiUrl, request);
+  }
+  public getById(id: string) {
+    return this.http.get<AssetResponse>(`${this.apiUrl}/${id}`);
+  }
+
+  public update(id: string, request: UpdateAssetRequest) {
+    return this.http.put(`${this.apiUrl}/${id}`, request);
+  }
+
+  public delete(id: string) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }
