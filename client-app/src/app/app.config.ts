@@ -5,12 +5,13 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     // Senior Standard: Provide the global HTTP client and attach our functional interceptors
-    provideHttpClient(withInterceptors([jwtInterceptor, errorInterceptor]))
+    provideHttpClient(withInterceptors([jwtInterceptor, errorInterceptor, loadingInterceptor]))
   ]
 };

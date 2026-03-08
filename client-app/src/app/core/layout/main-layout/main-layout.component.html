@@ -1,3 +1,9 @@
+@if (isLoading()) {
+  <div class="fixed top-0 left-0 w-full h-1 z-50 overflow-hidden bg-blue-100">
+    <div class="h-full bg-blue-600 animate-pulse" style="width: 100%; animation: indeterminate 1.5s infinite linear; transform-origin: 0% 50%;"></div>
+  </div>
+}
+
 <div class="flex h-screen bg-gray-50">
   
   <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
