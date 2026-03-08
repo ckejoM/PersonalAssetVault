@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AssetService } from '../../../core/services/asset.service';
+import { CategoryService } from '../../../core/services/category.service';
 
 @Component({
   selector: 'app-asset-create',
@@ -13,6 +14,11 @@ export class AssetCreateComponent {
   private fb = inject(FormBuilder);
   private assetService = inject(AssetService);
   private router = inject(Router);
+
+  private categoryService = inject(CategoryService);
+
+  // Expose the signal to the HTML
+  categories = this.categoryService.categories;
 
   // Strictly typed, non-nullable form
   assetForm = this.fb.nonNullable.group({
