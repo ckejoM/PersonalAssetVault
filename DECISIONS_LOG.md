@@ -4,9 +4,9 @@ This document tracks the architectural trade-offs, technical debt, and foundatio
 
 ## 1. Database: SQLite vs. PostgreSQL
 
-[cite_start]**Decision:** We utilized SQLite for the persistence layer instead of PostgreSQL.
+**Decision:** We utilized SQLite for the persistence layer instead of PostgreSQL.
 
-**Context & Reasoning:** This application is the foundational piece of a 9-project portfolio demonstrating Clean Architecture. The primary audience (recruiters, peer engineers, and hiring managers) needs to clone and run this repository with zero friction. 
+**Context & Reasoning:** This project explores Clean Architecture, and I wanted anyone to be able to clone and run it with zero setup. 
 * **Pros:** SQLite runs entirely in-memory or via a local `.db` file. It requires zero Docker containers, connection string configurations, or background services to run. 
 * **Cons:** It lacks advanced concurrency, strict relational constraints, and JSON column support found in enterprise engines.
 
@@ -15,7 +15,7 @@ The `Infrastructure` layer completely abstracts the database via the Repository 
 
 ## 2. State Management: Angular Signals vs. NgRx
 
-[cite_start]**Decision:** We implemented Angular Signals for frontend state management rather than NgRx[cite: 37].
+**Decision:** We implemented Angular Signals for frontend state management rather than NgRx.
 
 **Context & Reasoning:**
 * **Overhead vs. Value:** NgRx is the gold standard for massive enterprise applications but introduces significant boilerplate (Actions, Reducers, Selectors, Effects). For a personal CRUD dashboard, this level of indirection is an anti-pattern.
