@@ -1,63 +1,37 @@
-# Personal Asset Vault 🏦
+# PersonalAssetVault
 
-A modern, full-stack financial asset management dashboard. This project serves as the foundational pillar of a Senior Full-Stack Engineer portfolio, demonstrating strict adherence to Clean Architecture, robust API security, and highly optimized, reactive frontend state management.
+A full-stack dashboard for tracking personal assets, with login. I built it as a hands-on exercise in Clean Architecture and modern Angular (Signals).
 
-## 🏗️ Architecture Overview
+## Architecture
+The core domain has no dependencies on frameworks or the database:
+- **Domain:** entities, rules, and repository contracts
+- **Application:** use cases, DTOs, interfaces, and mapping
+- **Infrastructure:** EF Core, repositories, and the JWT token provider
+- **API:** thin ASP.NET Core controllers, DI setup, and CORS/auth middleware
+- **client-app:** Angular SPA
 
-This solution strictly enforces separation of concerns, ensuring that the core business domain has zero dependencies on external frameworks or databases:
-* **Client:** Angular 19 Client (Standalone / Signals)
-* **API:** Presentation Layer (ASP.NET Core API)
-* **Application:** Business Logic & CQRS (DTOs & Interfaces)
-* **Domain:** Enterprise Entities & Rules
-* **Infrastructure:** EF Core, Auth, & SQLite Database
+## Stack
+**Backend:** .NET 9 · ASP.NET Core Web API · EF Core with SQLite (code-first, Fluent API) · Mapster · BCrypt · JWT bearer auth · ProblemDetails error handling · Scalar API docs
 
-## 💻 Tech Stack
+**Frontend:** Angular 18 (standalone) · Signals and RxJS for state · Tailwind CSS · functional interceptors and route guards · reactive forms
 
-**Backend (.NET 9):**
-* **ASP.NET Core Web API:** RESTful endpoint design with centralized ProblemDetails exception handling.
-* **Entity Framework Core (SQLite):** Code-first migrations with Fluent API configurations.
-* **Mapster:** High-performance object mapping.
-* **BCrypt & JWT:** Secure password hashing and stateless authorization via Bearer tokens.
+## Why SQLite?
+So anyone can clone and run it with no database server or Docker. Because the database sits behind EF Core and repositories, moving to PostgreSQL means switching `UseSqlite()` to `UseNpgsql()` and generating a new migration. More decisions are in [DECISIONS_LOG.md](DECISIONS_LOG.md).
 
-**Frontend (Angular):**
-* **Standalone Components:** Modern, module-less architecture.
-* **Signals & RxJS:** Fine-grained reactive state management replacing Zone.js overhead.
-* **Tailwind CSS:** Utility-first styling for responsive, custom dashboards.
-* **Functional Interceptors & Guards:** Lean, functional approaches to HTTP pipeline manipulation and route security.
+## Run it locally
+Prerequisites: .NET 9 SDK, Node.js 20+, Angular CLI.
+1. Create the database:
+   `dotnet ef database update --project Infrastructure/Infrastructure.csproj --startup-project API/API.csproj`
+2. Run the API: `cd API && dotnet run`
+   The API starts at `https://localhost:7123`, and Scalar docs are at `/scalar/v1` in development.
+3. Run the client: `cd client-app && npm install && ng serve`
+4. Open `http://localhost:4200`. You'll be redirected to the login screen.
 
-## 🚀 Getting Started
-
-### Prerequisites
-* .NET SDK 9.0+
-* Node.js v20+
-* Angular CLI
-
-### 1. Database Setup
-Navigate to the root directory and apply the Entity Framework migrations to create the SQLite database:
-`dotnet ef database update --project Infrastructure/Infrastructure.csproj --startup-project API/API.csproj`
-
-### 2. Run the Backend API
-Navigate to the API folder and run the project:
-`cd API`
-`dotnet run`
-
-*The API will start at https://localhost:7123. Scalar documentation is available at /scalar/v1 in development mode.*
-
-### 3. Run the Frontend Client
-Open a new terminal window, navigate to the client folder, install packages, and serve:
-`cd client-app`
-`npm install`
-`ng serve`
-
-*Navigate to http://localhost:4200 in your browser. You will be redirected to the login screen.*
-
-## 📁 Repository Structure
-
-* **`Domain/`**: Enterprise entities and repository contracts.
-* **`Application/`**: Application services, DTOs, and mapping profiles.
-* **`Infrastructure/`**: DbContext, Repositories, and JWT token providers.
-* **`API/`**: Thin controllers, Dependency Injection orchestration, and CORS/Auth middleware.
-* **`client-app/`**: Angular SPA featuring layout shells, reactive forms, and global HTTP interceptors.
+## What's next
+- Unit tests for the Application layer
+- Asset history and simple charts
+- Refresh tokens
 
 ---
-*Created by Jovan Madzic | Software Engineer* - [LinkedIn](https://www.linkedin.com/in/jovan-madzic-12093b202/)
+
+Built by Jovan Madzic, Software Engineer in Belgrade · [LinkedIn](https://www.linkedin.com/in/jovan-madzic-12093b202/) · [GitHub](https://github.com/ckejoM)
